@@ -18,6 +18,8 @@
 7) Elimine la tercera moto
     Arrelgue funcion de colisiones y actualizar posicion rects
 
+8) Funciona perfecto el menu de pausa.
+
 Cosas por hacer:
 colisiones con autos rivales.
 sonidos de colisiones y turbo.
@@ -39,7 +41,8 @@ from clases.Fondo import Fondo
 from clases.MotoRival import MotoRival
 from clases.Aceite import Aceite
 from clases.Corazon import Corazon
-from funciones import pregunta_colision_vehiculo, eliminar_corazon
+from clases.Pausa import Pausa
+from funciones import eliminar_corazon
 
 pygame.init()
 
@@ -79,6 +82,15 @@ corazon_1 = Corazon(posicion_corazon)
 corazon_2 = Corazon(posicion_corazon_2)
 corazon_3 = Corazon(posicion_corazon_3)
 
+#CREACION PAUSA
+menu_pausa = Pausa()
+
+#JUEGO PAUSADO
+juego_pausado = False
+
+#MENU INICIAL
+
+
 flag_correr = True
 while flag_correr:
     #que traiga todos los eventos y los guarde en una lista.
@@ -87,39 +99,43 @@ while flag_correr:
         #detectamos la salida.
         if evento.type == pygame.QUIT:
             flag_correr = False
-        if evento.type == pygame.USEREVENT:
-            #Evento del tiempo
-            if evento.type == timer_segundos:
-                camino_1.mover(-600)
-                camino_2.mover(-600)
-                camino_3.mover(-600)
+        
+        if evento.type == pygame.KEYDOWN:
+            if evento.key == pygame.K_ESCAPE:
+                menu_pausa.visible = not menu_pausa.visible
+                juego_pausado = not juego_pausado
 
-                bosque_izq_1.mover(-500)
-                bosque_izq_2.mover(-500)
-                bosque_izq_3.mover(-500)
+        if not juego_pausado:
+            if evento.type == pygame.USEREVENT:
+                #Evento del tiempo
+                if evento.type == timer_segundos:
+                    camino_1.mover(-600)
+                    camino_2.mover(-600)
+                    camino_3.mover(-600)
 
-                bosque_der_1.mover(-530)
-                bosque_der_2.mover(-530)
-                bosque_der_3.mover(-530)
-                
-                moto_enemiga_1.mover()
-                moto_enemiga_2.mover()
+                    bosque_izq_1.mover(-500)
+                    bosque_izq_2.mover(-500)
+                    bosque_izq_3.mover(-500)
 
-                mancha_aceite.mover()
+                    bosque_der_1.mover(-530)
+                    bosque_der_2.mover(-530)
+                    bosque_der_3.mover(-530)
+                    
+                    moto_enemiga_1.mover()
+                    moto_enemiga_2.mover()
+
+                    mancha_aceite.mover()
         #Aca podes ir poniendo otras condiciones con otros eventos.
 
-    #movemos el auto principal
-    auto_principal.mover()
+    #movemos el auto principal si el juego no esta en pausa
+    if not juego_pausado:
+        auto_principal.mover()
 
-    #pregunto si choco con rivales
-    # pregunta_colision_vehiculo(auto_principal.rectangulo, moto_enemiga_1.rectangulo, "moto 1")
-    # pregunta_colision_vehiculo(auto_principal.rectangulo, moto_enemiga_2.rectangulo, "moto 2")
-    # pregunta_colision_vehiculo(auto_principal.rectangulo, mancha_aceite.rectangulo,"mancha aceite")
-
+    #eliminamos corazones si colisiona con alguna de las dos motos
     eliminar_corazon(auto_principal.rectangulo, moto_enemiga_1.rectangulo, auto_principal, corazon_1, corazon_2, corazon_3)
     eliminar_corazon(auto_principal.rectangulo, moto_enemiga_2.rectangulo, auto_principal, corazon_1, corazon_2, corazon_3)
 
-
+    #color del fondo
     pantalla.fill(color_verde)
 
     #cargamos fotos
@@ -146,7 +162,7 @@ while flag_correr:
     corazon_2.dibujar(pantalla)
     corazon_3.dibujar(pantalla)
 
-    
+    menu_pausa.dibujar(pantalla)
 
     #modificamos los cambios
     pygame.display.flip()
