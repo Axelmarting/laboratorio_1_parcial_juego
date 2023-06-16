@@ -57,10 +57,17 @@ def eliminar_corazon(rect_auto, rect_rival, clase_auto: str, corazon_1, corazon_
     else:
         print("FIN DEL JUEGO")
 
-
     # tiempo_espera = 1
     # tiempo_actual = time.time()
     # while tiempo_actual - tiempo_espera:
     #     continue
     # clase_auto.colisionando = False
     
+
+# def click_sobre_botones(evento, rect_boton):
+#     """
+#     Esta funcion detecta si se hizo click sobre cualquiera de los dos botones del menu principal: jugar o scores
+#     """
+#     if rect_boton.collidepoint(evento.pos):
+#         print("CLICK sobre el jugador")
+#         return True

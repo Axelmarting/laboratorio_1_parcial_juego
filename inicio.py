@@ -20,6 +20,8 @@
 
 8) Funciona perfecto el menu de pausa.
 
+9) Funciona perfecto el menu de inicio
+
 Cosas por hacer:
 colisiones con autos rivales.
 sonidos de colisiones y turbo.
@@ -34,7 +36,6 @@ configurar pausa dentro de la partida
 poner temporizador y quizas vidas dsp de las colisiones.
 """
 import pygame
-import time
 from constantes import *
 from clases.Auto import Auto
 from clases.Fondo import Fondo
@@ -42,6 +43,7 @@ from clases.MotoRival import MotoRival
 from clases.Aceite import Aceite
 from clases.Corazon import Corazon
 from clases.Pausa import Pausa
+from clases.Menu import Menu
 from funciones import eliminar_corazon
 
 pygame.init()
@@ -85,11 +87,17 @@ corazon_3 = Corazon(posicion_corazon_3)
 #CREACION PAUSA
 menu_pausa = Pausa()
 
+#CREACION MENU PRINCIPAL
+menu_principal = Menu()
+
 #JUEGO PAUSADO
-juego_pausado = False
+juego_pausado = True
 
-#MENU INICIAL
-
+#Puede colisionar
+"""
+Creo esta variable ya que cuando toco jugar automaticamente me borra un corazon, con esto se soluciona
+"""
+puede_colisionar = False
 
 flag_correr = True
 while flag_correr:
@@ -100,6 +108,13 @@ while flag_correr:
         if evento.type == pygame.QUIT:
             flag_correr = False
         
+        if evento.type == pygame.MOUSEBUTTONDOWN:
+            if menu_principal.rectangulo_jugar.collidepoint(evento.pos):
+                print("CLICK sobre boton jugar")
+                menu_principal.visible = False
+                juego_pausado = not juego_pausado
+                puede_colisionar = True
+
         if evento.type == pygame.KEYDOWN:
             if evento.key == pygame.K_ESCAPE:
                 menu_pausa.visible = not menu_pausa.visible
@@ -132,8 +147,9 @@ while flag_correr:
         auto_principal.mover()
 
     #eliminamos corazones si colisiona con alguna de las dos motos
-    eliminar_corazon(auto_principal.rectangulo, moto_enemiga_1.rectangulo, auto_principal, corazon_1, corazon_2, corazon_3)
-    eliminar_corazon(auto_principal.rectangulo, moto_enemiga_2.rectangulo, auto_principal, corazon_1, corazon_2, corazon_3)
+    if puede_colisionar:
+        eliminar_corazon(auto_principal.rectangulo, moto_enemiga_1.rectangulo, auto_principal, corazon_1, corazon_2, corazon_3)
+        eliminar_corazon(auto_principal.rectangulo, moto_enemiga_2.rectangulo, auto_principal, corazon_1, corazon_2, corazon_3)
 
     #color del fondo
     pantalla.fill(color_verde)
@@ -163,6 +179,8 @@ while flag_correr:
     corazon_3.dibujar(pantalla)
 
     menu_pausa.dibujar(pantalla)
+
+    menu_principal.dibujar(pantalla)
 
     #modificamos los cambios
     pygame.display.flip()
