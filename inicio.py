@@ -1,39 +1,19 @@
 """
-1) Este archivo tiene el fondo y el auto en movimiento.
-
-2) El auto ya tiene configurado las teclas para moverse turbo o volver a normal y tambien tiene los topes
-   para que no se salga del camino.
-
-3) clase creada para el auto principal.
-
-4) Las motos rivales tienen su propia clase.
-    Motos rivales funcionan perfecto y aparecen de forma random
-
-5) Ordene el codigo, meti todo en el archivo nuevo de clases.
-
-6) Colisiones con motos y aceite configuradas
-    Pasado todo a archivo constantes
-    Foto aceite
-
-7) Elimine la tercera moto
-    Arrelgue funcion de colisiones y actualizar posicion rects
-
-8) Funciona perfecto el menu de pausa.
-
-9) Funciona perfecto el menu de inicio
+ERRORES:
+Los botones de jugar y abandonar se pueden pulsar en cualquier momento del juego.
+No me elimina los corazones de las vidas.
 
 Cosas por hacer:
-colisiones con autos rivales.
-sonidos de colisiones y turbo.
+sonidos de colisiones
+Programar Score.
+Movimientos de autos rivales.
+Hacer algo cuando pise el aceite.
+
+
+Cosas no tan importantes:
 seleccionar el auto para jugar
+poner temporizador.
 
-quizas una clase para el fondo?
-
-programar menu: en este se tiene que seleccionar jugar o ver record historico.
-
-configurar pausa dentro de la partida
-
-poner temporizador y quizas vidas dsp de las colisiones.
 """
 import pygame
 from constantes import *
@@ -113,7 +93,9 @@ while flag_correr:
                 print("CLICK sobre boton jugar")
                 menu_principal.visible = False
                 menu_pausa.juego_pausado = False
-                puede_colisionar = True
+                puede_colisionar = True   
+            elif menu_principal.rectangulo_scores.collidepoint(evento.pos):
+                print("CLICK sobre boton scores")
 
         if evento.type == pygame.KEYDOWN:
             if evento.key == pygame.K_ESCAPE:
@@ -126,11 +108,6 @@ while flag_correr:
                 menu_pausa.juego_pausado = True
                 reiniciar_juego = True
                 print("CLICK sobre boton abandonar")
-
-            # if menu_pausa.rectangulo_abandonar.collidepoint(evento.pos):
-            #     menu_principal.visible = True
-            #     menu_pausa.juego_pausado = True
-            #     print("CLICK sobre boton abandonar")
 
         if not menu_pausa.juego_pausado:
             if evento.type == pygame.USEREVENT:
@@ -196,7 +173,6 @@ while flag_correr:
         # reinicio posicion de mancha de aceite
         mancha_aceite.reiniciar()
 
-
     #color del fondo
     pantalla.fill(color_verde)
 
@@ -213,12 +189,12 @@ while flag_correr:
     bosque_der_2.dibujar(pantalla, foto_bosque_der)
     bosque_der_3.dibujar(pantalla, foto_bosque_der)
 
-    auto_principal.dibujar(pantalla)
-
     moto_enemiga_1.dibujar(pantalla)
     moto_enemiga_2.dibujar(pantalla)
 
     mancha_aceite.dibujar(pantalla)
+
+    auto_principal.dibujar(pantalla)
 
     corazon_1.dibujar(pantalla)
     corazon_2.dibujar(pantalla)

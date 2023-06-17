@@ -4,7 +4,7 @@ class Pausa:
     posicion = 0,0
     juego_pausado = True
     visible = False
-    posicion_abandonar = (380,530)
+    posicion_abandonar = (380,160)
     foto_boton_abandonar = pygame.image.load(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\fotos\botonAbandonar.png")
     rectangulo_abandonar = foto_boton_abandonar.get_rect(topleft=posicion_abandonar)
 
