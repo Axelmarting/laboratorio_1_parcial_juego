@@ -4,6 +4,7 @@ Los botones de jugar y abandonar se pueden pulsar en cualquier momento del juego
 No me elimina los corazones de las vidas.
 
 Cosas por hacer:
+Ingrese nombre
 sonidos de colisiones
 Programar Score.
 Movimientos de autos rivales.
@@ -96,6 +97,8 @@ while flag_correr:
                 puede_colisionar = True   
             elif menu_principal.rectangulo_scores.collidepoint(evento.pos):
                 print("CLICK sobre boton scores")
+            elif menu_principal.rectangulo_nombre.collidepoint(evento.pos):
+                print("CLICK sobre boton nombre")
 
         if evento.type == pygame.KEYDOWN:
             if evento.key == pygame.K_ESCAPE:
