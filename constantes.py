@@ -49,12 +49,3 @@ foto_moto_2 = pygame.transform.scale(foto_moto_2,(55,95))
 posicion_corazon = (10,5)
 posicion_corazon_2 = (70,5)
 posicion_corazon_3 = (130,5)
-
-
-
-# #lista y estado de corazones:
-# estado_corazon = True
-# lista_corazones = []
-# lista_corazones.append(corazon_1.posicion_corazon)
-# lista_corazones.append(corazon_2.posicion_corazon)
-# lista_corazones.append(corazon_3.posicion_corazon)

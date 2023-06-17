@@ -17,5 +17,9 @@ class Aceite:
         
         actualizar_posicion_rect(self)
 
+    def reiniciar(self):
+        self.posicion[0] = generar_posicion_random()  # genera una nueva posición aleatoria en el eje x
+        self.posicion[1] = -170  # reinicia la posición en la parte superior
+
     def dibujar(self, pantalla):
         pantalla.blit(self.foto,(self.posicion))

@@ -17,5 +17,9 @@ class MotoRival:
 
         actualizar_posicion_rect(self)
 
+    def reiniciar(self, posicion_y):
+        self.posicion[0] = generar_posicion_random()  # genera una nueva posición aleatoria en el eje x
+        self.posicion[1] = posicion_y  # reinicia la posición en la parte superior   
+
     def dibujar(self,pantalla):
-        pantalla.blit(self.foto,(self.posicion))
+        pantalla.blit(self.foto,tuple(self.posicion))

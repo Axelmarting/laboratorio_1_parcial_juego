@@ -37,6 +37,10 @@ class Auto:
         
         actualizar_posicion_rect(self)
 
+    def reiniciar(self):
+        self.posicion = [330, 500]  # Establecer la posición inicial
+        self.velocidad_actual = 10  # Restablecer la velocidad
+        # self.rectangulo = self.foto.get_rect()  # Restablecer el rectángulo de colisión
 
     def dibujar(self,pantalla):
         pantalla.blit(self.foto,(self.posicion))

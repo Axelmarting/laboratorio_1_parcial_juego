@@ -90,14 +90,14 @@ menu_pausa = Pausa()
 #CREACION MENU PRINCIPAL
 menu_principal = Menu()
 
-#JUEGO PAUSADO
-juego_pausado = True
-
 #Puede colisionar
 """
 Creo esta variable ya que cuando toco jugar automaticamente me borra un corazon, con esto se soluciona
 """
 puede_colisionar = False
+
+#reinicio de juego para cuando toque abandonar
+reiniciar_juego = False
 
 flag_correr = True
 while flag_correr:
@@ -112,15 +112,27 @@ while flag_correr:
             if menu_principal.rectangulo_jugar.collidepoint(evento.pos):
                 print("CLICK sobre boton jugar")
                 menu_principal.visible = False
-                juego_pausado = not juego_pausado
+                menu_pausa.juego_pausado = False
                 puede_colisionar = True
 
         if evento.type == pygame.KEYDOWN:
             if evento.key == pygame.K_ESCAPE:
                 menu_pausa.visible = not menu_pausa.visible
-                juego_pausado = not juego_pausado
+                menu_pausa.juego_pausado = not menu_pausa.juego_pausado
+        
+        if evento.type == pygame.MOUSEBUTTONDOWN:
+            if menu_pausa.rectangulo_abandonar.collidepoint(evento.pos):
+                menu_principal.visible = True
+                menu_pausa.juego_pausado = True
+                reiniciar_juego = True
+                print("CLICK sobre boton abandonar")
 
-        if not juego_pausado:
+            # if menu_pausa.rectangulo_abandonar.collidepoint(evento.pos):
+            #     menu_principal.visible = True
+            #     menu_pausa.juego_pausado = True
+            #     print("CLICK sobre boton abandonar")
+
+        if not menu_pausa.juego_pausado:
             if evento.type == pygame.USEREVENT:
                 #Evento del tiempo
                 if evento.type == timer_segundos:
@@ -140,16 +152,50 @@ while flag_correr:
                     moto_enemiga_2.mover()
 
                     mancha_aceite.mover()
+
         #Aca podes ir poniendo otras condiciones con otros eventos.
 
     #movemos el auto principal si el juego no esta en pausa
-    if not juego_pausado:
+    if not menu_pausa.juego_pausado:
         auto_principal.mover()
 
     #eliminamos corazones si colisiona con alguna de las dos motos
     if puede_colisionar:
         eliminar_corazon(auto_principal.rectangulo, moto_enemiga_1.rectangulo, auto_principal, corazon_1, corazon_2, corazon_3)
         eliminar_corazon(auto_principal.rectangulo, moto_enemiga_2.rectangulo, auto_principal, corazon_1, corazon_2, corazon_3)
+
+    
+    if reiniciar_juego:
+        # Restablecer todas las variables y objetos del juego al estado inicial
+        auto_principal = Auto()
+        camino_1 = Fondo(posicion_carretera_1)
+        camino_2 = Fondo(posicion_carretera_2)
+        camino_3 = Fondo(posicion_carretera_3)
+        bosque_izq_1 = Fondo(posicion_bosque_izq_1)
+        bosque_izq_2 = Fondo(posicion_bosque_izq_2)
+        bosque_izq_3 = Fondo(posicion_bosque_izq_3)
+        bosque_der_1 = Fondo(posicion_bosque_der_1)
+        bosque_der_2 = Fondo(posicion_bosque_der_2)
+        bosque_der_3 = Fondo(posicion_bosque_der_3)
+        moto_enemiga_1 = MotoRival(posicion_moto_1, foto_moto_1)
+        moto_enemiga_2 = MotoRival(posicion_moto_2, foto_moto_2)
+        mancha_aceite = Aceite()
+        corazon_1 = Corazon(posicion_corazon)
+        corazon_2 = Corazon(posicion_corazon_2)
+        corazon_3 = Corazon(posicion_corazon_3)
+        menu_pausa = Pausa()
+        menu_principal = Menu()
+        juego_pausado = True
+        puede_colisionar = False
+        reiniciar_juego = False 
+        # reinicio posición del auto principal
+        auto_principal.reiniciar()
+        # reinicio posición de las motos rivales
+        moto_enemiga_1.reiniciar(-120)
+        moto_enemiga_2.reiniciar(-820)
+        # reinicio posicion de mancha de aceite
+        mancha_aceite.reiniciar()
+
 
     #color del fondo
     pantalla.fill(color_verde)
