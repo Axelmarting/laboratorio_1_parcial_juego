@@ -13,3 +13,7 @@ class Pausa:
             foto_pausa = pygame.image.load(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\fotos\Menu_pausa.png")
             pantalla.blit(foto_pausa, (self.posicion))
             pantalla.blit(self.foto_boton_abandonar, self.posicion_abandonar)
+
+    def reiniciar(self):
+        self.juego_pausado = False
+        self.visible = False

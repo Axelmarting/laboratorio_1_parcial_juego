@@ -7,7 +7,7 @@ class Auto:
     foto = pygame.transform.scale(foto,(100,170))
     posicion = [330,500]
     velocidad_actual = 10
-    rectangulo = foto.get_rect()
+    rectangulo = foto.get_rect(topleft=posicion)
     vidas = 3
     colisionando = False
 
@@ -39,8 +39,9 @@ class Auto:
 
     def reiniciar(self):
         self.posicion = [330, 500]  # Establecer la posición inicial
+        self.rectangulo = self.foto.get_rect(topleft=self.posicion)
         self.velocidad_actual = 10  # Restablecer la velocidad
-        # self.rectangulo = self.foto.get_rect()  # Restablecer el rectángulo de colisión
+        self.vidas = 3
 
     def dibujar(self,pantalla):
         pantalla.blit(self.foto,(self.posicion))

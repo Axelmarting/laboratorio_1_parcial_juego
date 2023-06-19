@@ -1,4 +1,5 @@
 import pygame
+from clases.Pausa import Pausa
 
 class Menu:
     posicion_fondo = 0,0
@@ -20,5 +21,3 @@ class Menu:
             pantalla.blit(self.foto_boton_jugar, self.posicion_jugar)
             pantalla.blit(self.foto_boton_scores, self.posicion_scores)
             pantalla.blit(self.foto_boton_nombre, self.posicion_nombre)
-
-        

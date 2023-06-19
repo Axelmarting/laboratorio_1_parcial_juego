@@ -9,6 +9,7 @@ sonidos de colisiones
 Programar Score.
 Movimientos de autos rivales.
 Hacer algo cuando pise el aceite.
+pantalla de perdida
 
 
 Cosas no tan importantes:
@@ -25,6 +26,7 @@ from clases.Aceite import Aceite
 from clases.Corazon import Corazon
 from clases.Pausa import Pausa
 from clases.Menu import Menu
+from clases.Perdida import Perdida
 from funciones import eliminar_corazon
 
 pygame.init()
@@ -71,6 +73,9 @@ menu_pausa = Pausa()
 #CREACION MENU PRINCIPAL
 menu_principal = Menu()
 
+#CREACION MENU PERDIDA
+menu_perdida = Perdida()
+
 #Puede colisionar
 """
 Creo esta variable ya que cuando toco jugar automaticamente me borra un corazon, con esto se soluciona
@@ -99,44 +104,63 @@ while flag_correr:
                 print("CLICK sobre boton scores")
             elif menu_principal.rectangulo_nombre.collidepoint(evento.pos):
                 print("CLICK sobre boton nombre")
-
-        if evento.type == pygame.KEYDOWN:
-            if evento.key == pygame.K_ESCAPE:
-                menu_pausa.visible = not menu_pausa.visible
-                menu_pausa.juego_pausado = not menu_pausa.juego_pausado
         
-        if evento.type == pygame.MOUSEBUTTONDOWN:
-            if menu_pausa.rectangulo_abandonar.collidepoint(evento.pos):
-                menu_principal.visible = True
+        if not menu_principal.visible:
+            if evento.type == pygame.KEYDOWN:
+                if evento.key == pygame.K_ESCAPE:
+                    menu_pausa.visible = not menu_pausa.visible
+                    menu_pausa.juego_pausado = not menu_pausa.juego_pausado
+            
+            if evento.type == pygame.MOUSEBUTTONDOWN:
+                if menu_pausa.rectangulo_abandonar.collidepoint(evento.pos):
+                    menu_principal.visible = True
+                    menu_pausa.juego_pausado = True
+                    reiniciar_juego = True
+                    print("CLICK sobre boton abandonar")
+
+            if not menu_pausa.juego_pausado:
+                if evento.type == pygame.USEREVENT:
+                    #Evento del tiempo
+                    if evento.type == timer_segundos:
+                        camino_1.mover(-600)
+                        camino_2.mover(-600)
+                        camino_3.mover(-600)
+
+                        bosque_izq_1.mover(-500)
+                        bosque_izq_2.mover(-500)
+                        bosque_izq_3.mover(-500)
+
+                        bosque_der_1.mover(-530)
+                        bosque_der_2.mover(-530)
+                        bosque_der_3.mover(-530)
+                        
+                        moto_enemiga_1.mover()
+                        moto_enemiga_2.mover()
+
+                        mancha_aceite.mover()
+            
+            if auto_principal.vidas == 0:
+                """Mostrar pantalla de perdida"""
+                menu_perdida.visible = True
                 menu_pausa.juego_pausado = True
-                reiniciar_juego = True
-                print("CLICK sobre boton abandonar")
+                if evento.type == pygame.MOUSEBUTTONDOWN:
+                    if menu_perdida.rectangulo_abandonar.collidepoint(evento.pos):
+                        menu_perdida.visible = False
+                        menu_principal.visible = True
+                        reiniciar_juego = True
+                        print("CLICK sobre boton abandonar")
 
-        if not menu_pausa.juego_pausado:
-            if evento.type == pygame.USEREVENT:
-                #Evento del tiempo
-                if evento.type == timer_segundos:
-                    camino_1.mover(-600)
-                    camino_2.mover(-600)
-                    camino_3.mover(-600)
-
-                    bosque_izq_1.mover(-500)
-                    bosque_izq_2.mover(-500)
-                    bosque_izq_3.mover(-500)
-
-                    bosque_der_1.mover(-530)
-                    bosque_der_2.mover(-530)
-                    bosque_der_3.mover(-530)
-                    
-                    moto_enemiga_1.mover()
-                    moto_enemiga_2.mover()
-
-                    mancha_aceite.mover()
+                    elif menu_perdida.rectangulo_reintentar.collidepoint(evento.pos):
+                        menu_principal.visible = False
+                        menu_pausa.juego_pausado = False
+                        menu_perdida.visible = False
+                        reiniciar_juego = True
+                        print("CLICK sobre boton reintentar")
 
         #Aca podes ir poniendo otras condiciones con otros eventos.
 
-    #movemos el auto principal si el juego no esta en pausa
-    if not menu_pausa.juego_pausado:
+    #movemos el auto principal si el juego no esta en pausa y si no esta en el menu principal
+    if not menu_pausa.juego_pausado and not menu_principal.visible:
         auto_principal.mover()
 
     #eliminamos corazones si colisiona con alguna de las dos motos
@@ -146,8 +170,7 @@ while flag_correr:
 
     
     if reiniciar_juego:
-        # Restablecer todas las variables y objetos del juego al estado inicial
-        auto_principal = Auto()
+        # aparitr de aca reinicio todos los objetos o variables a estado inicial
         camino_1 = Fondo(posicion_carretera_1)
         camino_2 = Fondo(posicion_carretera_2)
         camino_3 = Fondo(posicion_carretera_3)
@@ -163,10 +186,8 @@ while flag_correr:
         corazon_1 = Corazon(posicion_corazon)
         corazon_2 = Corazon(posicion_corazon_2)
         corazon_3 = Corazon(posicion_corazon_3)
-        menu_pausa = Pausa()
-        menu_principal = Menu()
+        menu_pausa.reiniciar()
         juego_pausado = True
-        puede_colisionar = False
         reiniciar_juego = False 
         # reinicio posición del auto principal
         auto_principal.reiniciar()
@@ -203,9 +224,11 @@ while flag_correr:
     corazon_2.dibujar(pantalla)
     corazon_3.dibujar(pantalla)
 
+    menu_principal.dibujar(pantalla)
+
     menu_pausa.dibujar(pantalla)
 
-    menu_principal.dibujar(pantalla)
+    menu_perdida.dibujar(pantalla)
 
     #modificamos los cambios
     pygame.display.flip()
