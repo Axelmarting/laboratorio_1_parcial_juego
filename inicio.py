@@ -1,20 +1,23 @@
 """
-ERRORES:
-Los botones de jugar y abandonar se pueden pulsar en cualquier momento del juego.
-No me elimina los corazones de las vidas.
+Errores:
+Funciona perfecto.
 
 Cosas por hacer:
 Ingrese nombre
 sonidos de colisiones
 Programar Score.
-Movimientos de autos rivales.
 Hacer algo cuando pise el aceite.
-pantalla de perdida
 
 
 Cosas no tan importantes:
 seleccionar el auto para jugar
 poner temporizador.
+carril de reincorporacion.
+Movimientos de autos rivales.
+
+Ideas:
+El score que sea el mismo tiempo desde que empezo el juego pero que cuando colisione 
+te reste ej 5seg, el que tenga mas puntos aparece aparece mas arriba en la lista.
 
 """
 import pygame
@@ -27,6 +30,7 @@ from clases.Corazon import Corazon
 from clases.Pausa import Pausa
 from clases.Menu import Menu
 from clases.Perdida import Perdida
+from clases.Nombre import Nombre
 from funciones import eliminar_corazon
 
 pygame.init()
@@ -76,6 +80,9 @@ menu_principal = Menu()
 #CREACION MENU PERDIDA
 menu_perdida = Perdida()
 
+#CREACION MENU NOMBRE
+menu_nombre = Nombre()
+
 #Puede colisionar
 """
 Creo esta variable ya que cuando toco jugar automaticamente me borra un corazon, con esto se soluciona
@@ -84,6 +91,11 @@ puede_colisionar = False
 
 #reinicio de juego para cuando toque abandonar
 reiniciar_juego = False
+
+# #INGRESO DE TEXTO DEL USUARIO
+font_input = pygame.font.SysFont("Arial",30)
+ingreso = ''
+rectangulo_ingreso = pygame.Rect(200,400,150,40)
 
 flag_correr = True
 while flag_correr:
@@ -94,24 +106,44 @@ while flag_correr:
         if evento.type == pygame.QUIT:
             flag_correr = False
         
+        #ACA PONGO TODO LO QUE NO ES RELACIONADO AL JUEGO
+
         if evento.type == pygame.MOUSEBUTTONDOWN:
-            if menu_principal.rectangulo_jugar.collidepoint(evento.pos):
+            if menu_principal.rectangulo_jugar.collidepoint(evento.pos): #boton jugar del menu principal
                 print("CLICK sobre boton jugar")
                 menu_principal.visible = False
                 menu_pausa.juego_pausado = False
                 puede_colisionar = True   
-            elif menu_principal.rectangulo_scores.collidepoint(evento.pos):
+
+            elif menu_principal.rectangulo_scores.collidepoint(evento.pos): #boton scores del menu principal
                 print("CLICK sobre boton scores")
-            elif menu_principal.rectangulo_nombre.collidepoint(evento.pos):
+
+            elif menu_principal.rectangulo_nombre.collidepoint(evento.pos): #boton nombre del menu principal
                 print("CLICK sobre boton nombre")
+                menu_principal.visible = False
+                menu_nombre.visible = True
+
+            if menu_nombre.visible and not menu_principal.visible: 
+                if menu_nombre.rectangulo_finalizar.collidepoint(evento.pos): #boton finalizar del menu nombre
+                    menu_principal.visible = True
+                    menu_nombre.visible = False
+                    print("CLICK sobre boton finalizar")
         
+        if evento.type == pygame.KEYDOWN:
+            if evento.key == pygame.K_BACKSPACE:
+                ingreso = ingreso[0:-1] #borrar nombre del menu nombre
+            else:
+                ingreso += evento.unicode #escrbir nombre del menu nombre
+
+        #ACA PONGO TODO LO RELACIONADO AL JUEGO
+
         if not menu_principal.visible:
             if evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_ESCAPE:
                     menu_pausa.visible = not menu_pausa.visible
                     menu_pausa.juego_pausado = not menu_pausa.juego_pausado
             
-            if evento.type == pygame.MOUSEBUTTONDOWN:
+            if evento.type == pygame.MOUSEBUTTONDOWN and menu_pausa.visible:
                 if menu_pausa.rectangulo_abandonar.collidepoint(evento.pos):
                     menu_principal.visible = True
                     menu_pausa.juego_pausado = True
@@ -229,6 +261,8 @@ while flag_correr:
     menu_pausa.dibujar(pantalla)
 
     menu_perdida.dibujar(pantalla)
+
+    menu_nombre.dibujar(pantalla,font_input,ingreso,rectangulo_ingreso)
 
     #modificamos los cambios
     pygame.display.flip()
