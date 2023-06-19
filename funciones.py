@@ -1,5 +1,4 @@
 import random
-import time
 from constantes import limites_pantalla
 
 
@@ -36,30 +35,34 @@ def pregunta_colision_vehiculo(rect_auto, rect_rival):
 def eliminar_corazon(rect_auto, rect_rival, clase_auto: str, corazon_1, corazon_2, corazon_3):
     """
     En caso que la lista de las posiciones de los corazones no este vacia, elimina uno.
+    Cuando el auto colisiona le ajusta la posicion fuera de la carretera
     Si esta vacia termina el juego.
     """
 
     if clase_auto.vidas > 0:
+        if clase_auto.colisionando:
+            return
+
         if pregunta_colision_vehiculo(rect_auto, rect_rival) and not clase_auto.colisionando:
             clase_auto.colisionando = True
             clase_auto.vidas -= 1
+            clase_auto.posicion = [200,520]
             print("Perdiste un corazon!")
             
-        if clase_auto.vidas == 2:
-            corazon_3.eliminar()
+            if clase_auto.vidas == 2:
+                corazon_3.eliminar()
 
-        elif clase_auto.vidas == 1:
-            corazon_2.eliminar()
+            elif clase_auto.vidas == 1:
+                corazon_2.eliminar()
 
-        elif clase_auto.vidas == 0:
-            corazon_1.eliminar()
+            elif clase_auto.vidas == 0:
+                corazon_1.eliminar()
+
+            clase_auto.colisionando = False
 
     else:
         print("FIN DEL JUEGO")
 
-    # tiempo_espera = 1
-    # tiempo_actual = time.time()
-    # while tiempo_actual - tiempo_espera:
-    #     continue
-    # clase_auto.colisionando = False
+    
+    
     

@@ -13,3 +13,6 @@ class Corazon:
     
     def eliminar(self):
         self.visible = False
+
+    def reaparecer(self):
+        self.visible = True
