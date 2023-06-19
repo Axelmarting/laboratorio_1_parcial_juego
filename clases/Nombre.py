@@ -16,4 +16,4 @@ class Nombre:
                 #DIBUJO TEXTO
             pygame.draw.rect(pantalla,self.color_gris,rectangulo_ingreso,2)
             font_input_surface = font_input.render(ingreso,True,self.color_gris)
-            pantalla.blit(font_input_surface,(rectangulo_ingreso.x+5, rectangulo_ingreso.y+5))
+            pantalla.blit(font_input_surface,(rectangulo_ingreso.x+20, rectangulo_ingreso.y+10))

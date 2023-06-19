@@ -93,9 +93,9 @@ puede_colisionar = False
 reiniciar_juego = False
 
 # #INGRESO DE TEXTO DEL USUARIO
-font_input = pygame.font.SysFont("Arial",30)
+font_input = pygame.font.SysFont("Arial",60)
 ingreso = ''
-rectangulo_ingreso = pygame.Rect(200,400,150,40)
+rectangulo_ingreso = pygame.Rect(350,400,270,100)
 
 flag_correr = True
 while flag_correr:
