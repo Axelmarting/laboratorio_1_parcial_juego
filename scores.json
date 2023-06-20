@@ -18,5 +18,13 @@
     {
         "nombre": "lucas",
         "tiempo": 5
+    },
+    {
+        "nombre": "",
+        "tiempo": 8
+    },
+    {
+        "nombre": "",
+        "tiempo": 20
     }
 ]

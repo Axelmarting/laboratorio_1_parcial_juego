@@ -17,6 +17,10 @@ class Scores:
             for i, score in enumerate(lista_ordenada[:3]):
                 nombre = score["nombre"]
                 tiempo = score["tiempo"]
+
+                if nombre == "":
+                    nombre = "Anonimo"
+
                 texto_score = font_input.render("{0}. {1}: {2}s".format(i+1,nombre,tiempo), True, self.color_gris)
 
                 if i == 0:
