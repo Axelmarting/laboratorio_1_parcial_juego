@@ -112,7 +112,7 @@ while flag_correr:
         
         #ACA PONGO TODO LO QUE NO ES RELACIONADO AL JUEGO
 
-        if evento.type == pygame.MOUSEBUTTONDOWN:
+        if evento.type == pygame.MOUSEBUTTONDOWN and menu_principal.visible:
             if menu_principal.rectangulo_jugar.collidepoint(evento.pos): #boton jugar del menu principal
                 print("CLICK sobre boton jugar")
                 menu_principal.visible = False
@@ -125,18 +125,19 @@ while flag_correr:
                 menu_principal.visible = False
                 menu_pausa.juego_pausado = True
                 menu_nombre.visible = True
-            if menu_nombre.visible and not menu_principal.visible: 
-                if menu_nombre.rectangulo_finalizar.collidepoint(evento.pos): #boton finalizar del menu nombre
-                    menu_principal.visible = True
-                    menu_pausa.juego_pausado = True
-                    menu_nombre.visible = False
-                    print("CLICK sobre boton finalizar")
+    
         if menu_nombre.visible:            
             if evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_BACKSPACE:
                     ingreso = ingreso[0:-1] #borrar nombre del menu nombre
                 else:
                     ingreso += evento.unicode #escrbir nombre del menu nombre
+            if evento.type == pygame.MOUSEBUTTONDOWN:
+                if menu_nombre.rectangulo_finalizar.collidepoint(evento.pos): #boton finalizar del menu nombre
+                    menu_principal.visible = True
+                    menu_pausa.juego_pausado = True
+                    menu_nombre.visible = False
+                    print("CLICK sobre boton finalizar")
 
         #ACA PONGO TODO LO RELACIONADO AL JUEGO
 
