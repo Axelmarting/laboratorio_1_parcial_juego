@@ -24,7 +24,7 @@ from clases.Menu import Menu
 from clases.Perdida import Perdida
 from clases.Nombre import Nombre
 from clases.scores import Scores
-from funciones import eliminar_corazon,cargar_scores,scores_exportar_json,ordenar_scores
+from funciones import eliminar_corazon,cargar_scores,scores_exportar_json,ordenar_scores,colision_con_aceite
 
 pygame.init()
 
@@ -217,6 +217,7 @@ while flag_correr:
 
     #eliminamos corazones si colisiona con alguna de las dos motos
     if puede_colisionar:
+        colision_con_aceite(auto_principal,auto_principal.rectangulo,mancha_aceite.rectangulo)
         eliminar_corazon(auto_principal.rectangulo, moto_enemiga_1.rectangulo, auto_principal, corazon_1, corazon_2, corazon_3)
         eliminar_corazon(auto_principal.rectangulo, moto_enemiga_2.rectangulo, auto_principal, corazon_1, corazon_2, corazon_3)
 

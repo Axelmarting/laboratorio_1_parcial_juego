@@ -31,6 +31,13 @@ def pregunta_colision_vehiculo(rect_auto, rect_rival):
         return True
     else:
         return False
+    
+def colision_con_aceite(clase_auto,rect_auto, rect_aceite):
+    if pregunta_colision_vehiculo(rect_auto,rect_aceite):
+        posicion_random_x = random.randint(325,575)
+        posicion_random_y = random.randint(0,550)
+        clase_auto.posicion = [posicion_random_x,posicion_random_y]
+
 
 
 def eliminar_corazon(rect_auto, rect_rival, clase_auto: str, corazon_1, corazon_2, corazon_3):
@@ -65,11 +72,10 @@ def eliminar_corazon(rect_auto, rect_rival, clase_auto: str, corazon_1, corazon_
         print("FIN DEL JUEGO")    
 
 
-def scores_exportar_json(nombre_archivo:str, lista:list): #5
+def scores_exportar_json(nombre_archivo:str, lista:list):
     """
     Dos parametros: ruta de acceso y lista de datos.
-    Le asigna los parametros correscpondientes a cada funcion.
-    Exporta la lista de alturas casteada a str al archivo csv.
+    Exporta la lista de alturas casteada a str al archivo json
     """
 
     with open(nombre_archivo, 'w') as file:
@@ -92,25 +98,32 @@ def obtener_tiempo(lista):
 
 
 def ordenar_scores(scores):
+    """
+    Recibe por parametro la lista de diccionarios con los scores
+    Ordena la lista de tiempos obtenida en la funcion anterior y la ordena de manera descendente.
+    Luego agrega los diccionarios ordenados a una lista que finalmente retorna.
+    """
     lista_tiempos = obtener_tiempo(scores)
     lista_tiempos.sort(reverse=True) 
 
-    lista_scores_ordenada = []
+    lista_dicts_scores_ordenada = []
     for tiempo in lista_tiempos:
-        for score in scores:
-            if score['tiempo'] == tiempo:
-                lista_scores_ordenada.append(score)
+        for diccionario in scores:
+            if diccionario['tiempo'] == tiempo:
+                lista_dicts_scores_ordenada.append(diccionario)
                 break
-
-    return lista_scores_ordenada
+    return lista_dicts_scores_ordenada
 
 
     
 def cargar_scores(nombre_archivo:str):
-    # Cargar la lista de scores desde un archivo JSON
+    """
+    recibe un paramentro que es la ruta de acceso del archivo json donde estan los scores.
+    carga la lista de scores y luego la retorna.
+    (esta funcion la hice porque cuando me terminaba el juego se borraba toda la lista, no quedaba guardada.)
+    """
     with open(nombre_archivo, 'r') as file:
         lista_scores = json.load(file)
 
-    # lista_scores_ordenada = ordenar_scores(lista_scores)
     return lista_scores
 

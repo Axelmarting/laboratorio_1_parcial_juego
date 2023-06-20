@@ -1,8 +1,8 @@
 import pygame
 
 #LIMITE DE MOVIMIENTO
-# limite_izquierdo = 325
 # limite_derecho = 575
+# limite_izquierdo = 325
 # limite_superior = 0
 # limite_inferior = 550
 limites_pantalla = (575, 325, 0, 550)
