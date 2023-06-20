@@ -78,18 +78,39 @@ def scores_exportar_json(nombre_archivo:str, lista:list): #5
     print("\nLista exportada al archivo json.")
 
     
-def obtener_tiempo(score):
-    return score['tiempo']
+def obtener_tiempo(lista):
+    """
+    Un parametro: lista de diccionarios (lista de scores)
+    Itera sobre la lista scores guardando solamente el valor de la clave tiempo en una lista de tiempos
+    luego retorna la misma.
+    """
+    lista_tiempos = []
+    for score in lista:
+        tiempo = score.get('tiempo')
+        lista_tiempos.append(tiempo)
+    return lista_tiempos
+
+
+def ordenar_scores(scores):
+    lista_tiempos = obtener_tiempo(scores)
+    lista_tiempos.sort(reverse=True) 
+
+    lista_scores_ordenada = []
+    for tiempo in lista_tiempos:
+        for score in scores:
+            if score['tiempo'] == tiempo:
+                lista_scores_ordenada.append(score)
+                break
+
+    return lista_scores_ordenada
+
 
     
-def cargar_ordenar_scores(nombre_archivo:str):
+def cargar_scores(nombre_archivo:str):
     # Cargar la lista de scores desde un archivo JSON
     with open(nombre_archivo, 'r') as file:
         lista_scores = json.load(file)
 
-    tiempo = obtener_tiempo(lista_scores)
+    # lista_scores_ordenada = ordenar_scores(lista_scores)
+    return lista_scores
 
-    # Ordenar la lista de scores por el tiempo en orden ascendente
-    lista_scores_ordenada = sorted(lista_scores, key=tiempo)
-
-    return lista_scores_ordenada

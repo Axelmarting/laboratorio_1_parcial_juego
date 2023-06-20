@@ -1,14 +1,26 @@
 [
     {
-        "nombre": "Axel Martin",
-        "tiempo": 9
+        "nombre": "Matias",
+        "tiempo": 3
     },
     {
-        "nombre": "Axel Martin",
-        "tiempo": 12
+        "nombre": "Axel",
+        "tiempo": 5
     },
     {
-        "nombre": "MARCELO",
-        "tiempo": 21
+        "nombre": "AXEL",
+        "tiempo": 6
+    },
+    {
+        "nombre": "juan",
+        "tiempo": 20
+    },
+    {
+        "nombre": "lucas",
+        "tiempo": 1
+    },
+    {
+        "nombre": "PRIMERO",
+        "tiempo": 25
     }
 ]

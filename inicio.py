@@ -26,7 +26,7 @@ from clases.Menu import Menu
 from clases.Perdida import Perdida
 from clases.Nombre import Nombre
 from clases.scores import Scores
-from funciones import eliminar_corazon,cargar_ordenar_scores,scores_exportar_json
+from funciones import eliminar_corazon,cargar_scores,scores_exportar_json,ordenar_scores
 
 pygame.init()
 
@@ -100,8 +100,9 @@ reloj = pygame.time.Clock()
 
 
 #CARGO LISTA SCORES
-# lista_scores = cargar_ordenar_scores(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\ordenado\scores.json")
-
+lista_scores = cargar_scores(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\ordenado\scores.json")
+lista_ordenada = ordenar_scores(lista_scores)
+print(lista_ordenada)
 
 flag_correr = True
 while flag_correr:
@@ -296,7 +297,7 @@ while flag_correr:
     if not menu_pausa.juego_pausado and not menu_principal.visible and not menu_perdida.visible:
         pantalla.blit(tiempo,(700,10))
 
-    menu_score.dibujar(pantalla)
+    menu_score.dibujar(pantalla,lista_ordenada,font_input)
 
     #modificamos los cambios
     pygame.display.flip()
