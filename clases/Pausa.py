@@ -15,5 +15,5 @@ class Pausa:
             pantalla.blit(self.foto_boton_abandonar, self.posicion_abandonar)
 
     def reiniciar(self):
-        self.juego_pausado = False
+        # self.juego_pausado = True
         self.visible = False

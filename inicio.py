@@ -21,6 +21,7 @@ te reste ej 5seg, el que tenga mas puntos aparece aparece mas arriba en la lista
 
 """
 import pygame
+import time
 from constantes import *
 from clases.Auto import Auto
 from clases.Fondo import Fondo
@@ -97,6 +98,9 @@ font_input = pygame.font.SysFont("Arial",60)
 ingreso = ''
 rectangulo_ingreso = pygame.Rect(350,400,270,100)
 
+#tiempo para score
+reloj = pygame.time.Clock()
+
 flag_correr = True
 while flag_correr:
     #que traiga todos los eventos y los guarde en una lista.
@@ -114,42 +118,39 @@ while flag_correr:
                 menu_principal.visible = False
                 menu_pausa.juego_pausado = False
                 puede_colisionar = True   
-
             elif menu_principal.rectangulo_scores.collidepoint(evento.pos): #boton scores del menu principal
                 print("CLICK sobre boton scores")
-
             elif menu_principal.rectangulo_nombre.collidepoint(evento.pos): #boton nombre del menu principal
                 print("CLICK sobre boton nombre")
                 menu_principal.visible = False
+                menu_pausa.juego_pausado = True
                 menu_nombre.visible = True
-
             if menu_nombre.visible and not menu_principal.visible: 
                 if menu_nombre.rectangulo_finalizar.collidepoint(evento.pos): #boton finalizar del menu nombre
                     menu_principal.visible = True
+                    menu_pausa.juego_pausado = True
                     menu_nombre.visible = False
                     print("CLICK sobre boton finalizar")
-        
-        if evento.type == pygame.KEYDOWN:
-            if evento.key == pygame.K_BACKSPACE:
-                ingreso = ingreso[0:-1] #borrar nombre del menu nombre
-            else:
-                ingreso += evento.unicode #escrbir nombre del menu nombre
+        if menu_nombre.visible:            
+            if evento.type == pygame.KEYDOWN:
+                if evento.key == pygame.K_BACKSPACE:
+                    ingreso = ingreso[0:-1] #borrar nombre del menu nombre
+                else:
+                    ingreso += evento.unicode #escrbir nombre del menu nombre
 
         #ACA PONGO TODO LO RELACIONADO AL JUEGO
 
-        if not menu_principal.visible:
+        if not menu_principal.visible and not menu_nombre.visible:
             if evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_ESCAPE:
                     menu_pausa.visible = not menu_pausa.visible
-                    menu_pausa.juego_pausado = not menu_pausa.juego_pausado
-            
+                    menu_pausa.juego_pausado = not menu_pausa.juego_pausado     
             if evento.type == pygame.MOUSEBUTTONDOWN and menu_pausa.visible:
                 if menu_pausa.rectangulo_abandonar.collidepoint(evento.pos):
                     menu_principal.visible = True
                     menu_pausa.juego_pausado = True
                     reiniciar_juego = True
                     print("CLICK sobre boton abandonar")
-
             if not menu_pausa.juego_pausado:
                 if evento.type == pygame.USEREVENT:
                     #Evento del tiempo
@@ -169,19 +170,18 @@ while flag_correr:
                         moto_enemiga_1.mover()
                         moto_enemiga_2.mover()
 
-                        mancha_aceite.mover()
-            
+                        mancha_aceite.mover() 
             if auto_principal.vidas == 0:
                 """Mostrar pantalla de perdida"""
                 menu_perdida.visible = True
-                menu_pausa.juego_pausado = True
+                
                 if evento.type == pygame.MOUSEBUTTONDOWN:
                     if menu_perdida.rectangulo_abandonar.collidepoint(evento.pos):
                         menu_perdida.visible = False
                         menu_principal.visible = True
+                        menu_pausa.juego_pausado = True
                         reiniciar_juego = True
                         print("CLICK sobre boton abandonar")
-
                     elif menu_perdida.rectangulo_reintentar.collidepoint(evento.pos):
                         menu_principal.visible = False
                         menu_pausa.juego_pausado = False
@@ -200,7 +200,15 @@ while flag_correr:
         eliminar_corazon(auto_principal.rectangulo, moto_enemiga_1.rectangulo, auto_principal, corazon_1, corazon_2, corazon_3)
         eliminar_corazon(auto_principal.rectangulo, moto_enemiga_2.rectangulo, auto_principal, corazon_1, corazon_2, corazon_3)
 
+    if not menu_pausa.juego_pausado:
+        tiempo = font_input.render("TIEMPO: {0}".format(segundos),True,color_rojo)
+        tiempo_calculo_seg += 1
+
+        if tiempo_calculo_seg == 50:
+            tiempo_calculo_seg = 0
+            segundos += 1
     
+
     if reiniciar_juego:
         # aparitr de aca reinicio todos los objetos o variables a estado inicial
         camino_1 = Fondo(posicion_carretera_1)
@@ -219,7 +227,7 @@ while flag_correr:
         corazon_2 = Corazon(posicion_corazon_2)
         corazon_3 = Corazon(posicion_corazon_3)
         menu_pausa.reiniciar()
-        juego_pausado = True
+        # menu_pausa.juego_pausado = True
         reiniciar_juego = False 
         # reinicio posición del auto principal
         auto_principal.reiniciar()
@@ -228,6 +236,7 @@ while flag_correr:
         moto_enemiga_2.reiniciar(-820)
         # reinicio posicion de mancha de aceite
         mancha_aceite.reiniciar()
+        segundos = 0
 
     #color del fondo
     pantalla.fill(color_verde)
@@ -263,6 +272,9 @@ while flag_correr:
     menu_perdida.dibujar(pantalla)
 
     menu_nombre.dibujar(pantalla,font_input,ingreso,rectangulo_ingreso)
+
+    if not menu_pausa.juego_pausado and not menu_principal.visible and not menu_perdida.visible:
+        pantalla.blit(tiempo,(700,10))
 
     #modificamos los cambios
     pygame.display.flip()

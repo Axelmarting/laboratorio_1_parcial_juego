@@ -10,6 +10,7 @@ limites_pantalla = (575, 325, 0, 550)
 ancho_ventana = 1000
 alto_ventana = 720
 color_verde = (0, 180, 0)
+color_rojo = (255, 0, 0)
 
 velocidad_objetos = 5
 
@@ -49,3 +50,7 @@ foto_moto_2 = pygame.transform.scale(foto_moto_2,(55,95))
 posicion_corazon = (10,5)
 posicion_corazon_2 = (70,5)
 posicion_corazon_3 = (130,5)
+
+
+segundos = 0
+tiempo_calculo_seg = 0
