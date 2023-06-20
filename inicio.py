@@ -3,25 +3,17 @@ Errores:
 Funciona perfecto.
 
 Cosas por hacer:
-Ingrese nombre
 sonidos de colisiones
-Programar Score.
+Programar boton Score.
 Hacer algo cuando pise el aceite.
 
 
 Cosas no tan importantes:
 seleccionar el auto para jugar
-poner temporizador.
 carril de reincorporacion.
 Movimientos de autos rivales.
-
-Ideas:
-El score que sea el mismo tiempo desde que empezo el juego pero que cuando colisione 
-te reste ej 5seg, el que tenga mas puntos aparece aparece mas arriba en la lista.
-
 """
 import pygame
-import time
 from constantes import *
 from clases.Auto import Auto
 from clases.Fondo import Fondo
@@ -32,6 +24,7 @@ from clases.Pausa import Pausa
 from clases.Menu import Menu
 from clases.Perdida import Perdida
 from clases.Nombre import Nombre
+from clases.scores import Scores
 from funciones import eliminar_corazon
 
 pygame.init()
@@ -84,6 +77,9 @@ menu_perdida = Perdida()
 #CREACION MENU NOMBRE
 menu_nombre = Nombre()
 
+#CREACION MENU SCORES
+menu_score = Scores()
+
 #Puede colisionar
 """
 Creo esta variable ya que cuando toco jugar automaticamente me borra un corazon, con esto se soluciona
@@ -118,14 +114,26 @@ while flag_correr:
                 menu_principal.visible = False
                 menu_pausa.juego_pausado = False
                 puede_colisionar = True   
+                contar_tiempo = True
             elif menu_principal.rectangulo_scores.collidepoint(evento.pos): #boton scores del menu principal
                 print("CLICK sobre boton scores")
+                menu_principal.visible = False
+                menu_pausa.juego_pausado = True
+                menu_score.visible = True
             elif menu_principal.rectangulo_nombre.collidepoint(evento.pos): #boton nombre del menu principal
                 print("CLICK sobre boton nombre")
                 menu_principal.visible = False
                 menu_pausa.juego_pausado = True
                 menu_nombre.visible = True
     
+        if menu_score.visible:
+            if evento.type == pygame.MOUSEBUTTONDOWN:
+                if menu_score.rectangulo_finalizar.collidepoint(evento.pos): #boton finalizar del menu nombre
+                    menu_principal.visible = True
+                    menu_pausa.juego_pausado = True
+                    menu_score.visible = False
+                    print("CLICK sobre boton finalizar")
+
         if menu_nombre.visible:            
             if evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_BACKSPACE:
@@ -175,12 +183,16 @@ while flag_correr:
             if auto_principal.vidas == 0:
                 """Mostrar pantalla de perdida"""
                 menu_perdida.visible = True
-                
+                contar_tiempo = False
                 if evento.type == pygame.MOUSEBUTTONDOWN:
                     if menu_perdida.rectangulo_abandonar.collidepoint(evento.pos):
                         menu_perdida.visible = False
                         menu_principal.visible = True
                         menu_pausa.juego_pausado = True
+                        nombre_jugador = ingreso
+                        score = {"nombre": nombre_jugador, "tiempo": segundos}
+                        lista_scores.append(score)
+                        print(lista_scores)
                         reiniciar_juego = True
                         print("CLICK sobre boton abandonar")
                     elif menu_perdida.rectangulo_reintentar.collidepoint(evento.pos):
@@ -188,6 +200,7 @@ while flag_correr:
                         menu_pausa.juego_pausado = False
                         menu_perdida.visible = False
                         reiniciar_juego = True
+                        contar_tiempo = True
                         print("CLICK sobre boton reintentar")
 
         #Aca podes ir poniendo otras condiciones con otros eventos.
@@ -201,7 +214,7 @@ while flag_correr:
         eliminar_corazon(auto_principal.rectangulo, moto_enemiga_1.rectangulo, auto_principal, corazon_1, corazon_2, corazon_3)
         eliminar_corazon(auto_principal.rectangulo, moto_enemiga_2.rectangulo, auto_principal, corazon_1, corazon_2, corazon_3)
 
-    if not menu_pausa.juego_pausado:
+    if not menu_pausa.juego_pausado and contar_tiempo:
         tiempo = font_input.render("TIEMPO: {0}".format(segundos),True,color_rojo)
         tiempo_calculo_seg += 1
 
@@ -276,6 +289,8 @@ while flag_correr:
 
     if not menu_pausa.juego_pausado and not menu_principal.visible and not menu_perdida.visible:
         pantalla.blit(tiempo,(700,10))
+
+    menu_score.dibujar(pantalla)
 
     #modificamos los cambios
     pygame.display.flip()

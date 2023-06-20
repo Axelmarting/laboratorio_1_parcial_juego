@@ -52,5 +52,9 @@ posicion_corazon_2 = (70,5)
 posicion_corazon_3 = (130,5)
 
 
+contar_tiempo = False
 segundos = 0
 tiempo_calculo_seg = 0
+
+
+lista_scores = []
