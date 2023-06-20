@@ -14,6 +14,7 @@ carril de reincorporacion.
 Movimientos de autos rivales.
 """
 import pygame
+import json
 from constantes import *
 from clases.Auto import Auto
 from clases.Fondo import Fondo
@@ -25,7 +26,7 @@ from clases.Menu import Menu
 from clases.Perdida import Perdida
 from clases.Nombre import Nombre
 from clases.scores import Scores
-from funciones import eliminar_corazon
+from funciones import eliminar_corazon,cargar_ordenar_scores,scores_exportar_json
 
 pygame.init()
 
@@ -96,6 +97,11 @@ rectangulo_ingreso = pygame.Rect(350,400,270,100)
 
 #tiempo para score
 reloj = pygame.time.Clock()
+
+
+#CARGO LISTA SCORES
+# lista_scores = cargar_ordenar_scores(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\ordenado\scores.json")
+
 
 flag_correr = True
 while flag_correr:
@@ -192,7 +198,7 @@ while flag_correr:
                         nombre_jugador = ingreso
                         score = {"nombre": nombre_jugador, "tiempo": segundos}
                         lista_scores.append(score)
-                        print(lista_scores)
+                        scores_exportar_json(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\ordenado\scores.json",lista_scores)
                         reiniciar_juego = True
                         print("CLICK sobre boton abandonar")
                     elif menu_perdida.rectangulo_reintentar.collidepoint(evento.pos):
@@ -218,7 +224,7 @@ while flag_correr:
         tiempo = font_input.render("TIEMPO: {0}".format(segundos),True,color_rojo)
         tiempo_calculo_seg += 1
 
-        if tiempo_calculo_seg == 50:
+        if tiempo_calculo_seg == 58:
             tiempo_calculo_seg = 0
             segundos += 1
     

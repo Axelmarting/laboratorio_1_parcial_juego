@@ -1,4 +1,5 @@
 import random
+import json
 from constantes import limites_pantalla
 
 
@@ -61,8 +62,34 @@ def eliminar_corazon(rect_auto, rect_rival, clase_auto: str, corazon_1, corazon_
             clase_auto.colisionando = False
 
     else:
-        print("FIN DEL JUEGO")
+        print("FIN DEL JUEGO")    
+
+
+def scores_exportar_json(nombre_archivo:str, lista:list): #5
+    """
+    Dos parametros: ruta de acceso y lista de datos.
+    Le asigna los parametros correscpondientes a cada funcion.
+    Exporta la lista de alturas casteada a str al archivo csv.
+    """
+
+    with open(nombre_archivo, 'w') as file:
+        json.dump(lista, file, indent=4)
+
+    print("\nLista exportada al archivo json.")
 
     
+def obtener_tiempo(score):
+    return score['tiempo']
+
     
-    
+def cargar_ordenar_scores(nombre_archivo:str):
+    # Cargar la lista de scores desde un archivo JSON
+    with open(nombre_archivo, 'r') as file:
+        lista_scores = json.load(file)
+
+    tiempo = obtener_tiempo(lista_scores)
+
+    # Ordenar la lista de scores por el tiempo en orden ascendente
+    lista_scores_ordenada = sorted(lista_scores, key=tiempo)
+
+    return lista_scores_ordenada
