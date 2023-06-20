@@ -28,22 +28,22 @@ posicion_bosque_der_2 = [670,400]
 posicion_bosque_der_3 = [670,-400]
 
 #Cargamos fotos y ajustamos tamanio
-foto_carretera = pygame.image.load(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\fotos\carretera.jpg")
+foto_carretera = pygame.image.load(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\ordenado\fotos\carretera.jpg")
 foto_carretera = pygame.transform.scale(foto_carretera,(350,600))
 
-foto_bosque_izq = pygame.image.load(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\fotos\arbolesarriba-removebg-preview (1).png")
+foto_bosque_izq = pygame.image.load(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\ordenado\fotos\arbolesarriba-removebg-preview (1).png")
 foto_bosque_izq = pygame.transform.scale(foto_bosque_izq,(350,600))
 
-foto_bosque_der = pygame.image.load(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\fotos\arboles_arriba_2-removebg-preview.png")
+foto_bosque_der = pygame.image.load(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\ordenado\fotos\arboles_arriba_2-removebg-preview.png")
 foto_bosque_der = pygame.transform.scale(foto_bosque_der,(350,600))
 
 posicion_moto_1 = [330,-120]
 posicion_moto_2 = [400,-820]
 
-foto_moto_1 = pygame.image.load(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\fotos\moto-removebg-preview.png")
+foto_moto_1 = pygame.image.load(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\ordenado\fotos\moto-removebg-preview.png")
 foto_moto_1 = pygame.transform.scale(foto_moto_1,(60,100))
 
-foto_moto_2 = pygame.image.load(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\fotos\moto2.png")
+foto_moto_2 = pygame.image.load(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\ordenado\fotos\moto2.png")
 foto_moto_2 = pygame.transform.scale(foto_moto_2,(55,95))
 
 

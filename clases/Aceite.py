@@ -3,7 +3,7 @@ from constantes import velocidad_objetos,alto_ventana
 from funciones import generar_posicion_random, actualizar_posicion_rect
 
 class Aceite:
-    foto = pygame.image.load(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\fotos\mancha_aceite.png")
+    foto = pygame.image.load(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\ordenado\fotos\mancha_aceite.png")
     foto = pygame.transform.scale(foto,(70,70))
     posicion = [430,-170]
     rectangulo = foto.get_rect()

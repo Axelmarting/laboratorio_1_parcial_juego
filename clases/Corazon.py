@@ -7,7 +7,7 @@ class Corazon:
 
     def dibujar(self, pantalla):
         if self.visible:
-            foto_corazon = pygame.image.load(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\fotos\corazon.png")
+            foto_corazon = pygame.image.load(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\ordenado\fotos\corazon.png")
             foto_corazon = pygame.transform.scale(foto_corazon,(50,50))
             pantalla.blit(foto_corazon, self.posicion_corazon)
     

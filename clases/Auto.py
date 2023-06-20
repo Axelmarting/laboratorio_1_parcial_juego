@@ -3,7 +3,7 @@ from constantes import limites_pantalla
 from funciones import actualizar_posicion_rect
 
 class Auto:
-    foto = pygame.image.load(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\fotos\auto_verde-removebg-preview.png")
+    foto = pygame.image.load(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\ordenado\fotos\auto_verde-removebg-preview.png")
     foto = pygame.transform.scale(foto,(100,170))
     posicion = [330,500]
     velocidad_actual = 10
