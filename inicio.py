@@ -3,9 +3,8 @@ Errores:
 Funciona perfecto.
 
 Cosas por hacer:
-sonidos de colisiones
-Programar boton Score.
 Hacer algo cuando pise el aceite.
+algun sonido
 
 
 Cosas no tan importantes:
@@ -14,7 +13,6 @@ carril de reincorporacion.
 Movimientos de autos rivales.
 """
 import pygame
-import json
 from constantes import *
 from clases.Auto import Auto
 from clases.Fondo import Fondo
@@ -126,6 +124,8 @@ while flag_correr:
                 print("CLICK sobre boton scores")
                 menu_principal.visible = False
                 menu_pausa.juego_pausado = True
+                # lista_scores = cargar_scores(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\ordenado\scores.json")
+                lista_ordenada = ordenar_scores(lista_scores)
                 menu_score.visible = True
             elif menu_principal.rectangulo_nombre.collidepoint(evento.pos): #boton nombre del menu principal
                 print("CLICK sobre boton nombre")

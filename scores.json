@@ -1,26 +1,22 @@
 [
     {
-        "nombre": "Matias",
+        "nombre": "AXEL",
         "tiempo": 3
     },
     {
-        "nombre": "Axel",
-        "tiempo": 5
-    },
-    {
-        "nombre": "AXEL",
+        "nombre": "ganador",
         "tiempo": 6
     },
     {
-        "nombre": "juan",
-        "tiempo": 20
+        "nombre": "MARCELO",
+        "tiempo": 12
     },
     {
         "nombre": "lucas",
-        "tiempo": 1
+        "tiempo": 3
     },
     {
-        "nombre": "PRIMERO",
-        "tiempo": 25
+        "nombre": "lucas",
+        "tiempo": 5
     }
 ]
