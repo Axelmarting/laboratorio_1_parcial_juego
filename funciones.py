@@ -1,5 +1,6 @@
 import random
 import json
+import pygame
 from constantes import limites_pantalla
 
 
@@ -127,3 +128,8 @@ def cargar_scores(nombre_archivo:str):
 
     return lista_scores
 
+
+def reproducir_musica():
+    pygame.mixer.init()
+    sonido_game_over = pygame.mixer.Sound(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\ordenado\sonido_game_over.mp3")
+    return sonido_game_over

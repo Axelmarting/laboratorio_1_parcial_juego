@@ -56,5 +56,6 @@ contar_tiempo = False
 segundos = 0
 tiempo_calculo_seg = 0
 
-
 lista_scores = []
+
+musica_reproduciendose = True

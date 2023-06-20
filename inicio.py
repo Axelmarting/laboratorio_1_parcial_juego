@@ -24,7 +24,7 @@ from clases.Menu import Menu
 from clases.Perdida import Perdida
 from clases.Nombre import Nombre
 from clases.scores import Scores
-from funciones import eliminar_corazon,cargar_scores,scores_exportar_json,ordenar_scores,colision_con_aceite
+from funciones import eliminar_corazon,cargar_scores,scores_exportar_json,ordenar_scores,colision_con_aceite,reproducir_musica
 
 pygame.init()
 
@@ -101,6 +101,11 @@ reloj = pygame.time.Clock()
 lista_scores = cargar_scores(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\ordenado\scores.json")
 lista_ordenada = ordenar_scores(lista_scores)
 print(lista_ordenada)
+
+
+#CARGO SONIDO
+sonido_game_over = reproducir_musica()
+
 
 flag_correr = True
 while flag_correr:
@@ -199,6 +204,7 @@ while flag_correr:
                         score = {"nombre": nombre_jugador, "tiempo": segundos}
                         lista_scores.append(score)
                         scores_exportar_json(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\ordenado\scores.json",lista_scores)
+                        sonido_game_over.play()
                         reiniciar_juego = True
                         print("CLICK sobre boton abandonar")
                     elif menu_perdida.rectangulo_reintentar.collidepoint(evento.pos):
@@ -228,7 +234,7 @@ while flag_correr:
         if tiempo_calculo_seg == 58:
             tiempo_calculo_seg = 0
             segundos += 1
-    
+
 
     if reiniciar_juego:
         # aparitr de aca reinicio todos los objetos o variables a estado inicial
