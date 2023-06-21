@@ -6,7 +6,6 @@ class Fondo:
         self.posicion_fondo = posicion
 
     def mover(self, posicion_reaparecer):
-        #preguntas si el circulo esta dentro de la pantalla
         if self.posicion_fondo[1] - 1 < alto_ventana:
             self.posicion_fondo[1] = self.posicion_fondo[1] + velocidad_objetos
         else:

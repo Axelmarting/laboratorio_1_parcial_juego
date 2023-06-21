@@ -2,15 +2,15 @@
 Errores:
 Funciona perfecto.
 
-Cosas por hacer:
-Hacer algo cuando pise el aceite.
-algun sonido
-
+Cosas por hacer de consigna:
+Terminado.
 
 Cosas no tan importantes:
 seleccionar el auto para jugar
 carril de reincorporacion.
-Movimientos de autos rivales.
+tiempo para estar en el carril de reincorporacion
+restar tiempo(puntaje) si pisas un pozo o otra cosa
+musica de menu principal
 """
 import pygame
 from constantes import *
@@ -29,7 +29,7 @@ from funciones import eliminar_corazon,cargar_scores,scores_exportar_json,ordena
 pygame.init()
 
 #TIMER
-timer_segundos = pygame.USEREVENT  #Este es un evento que creo yo. No es uno existente.
+timer_segundos = pygame.USEREVENT 
 pygame.time.set_timer(timer_segundos, 100) #1000millis = 1seg
 pygame.display.set_caption("AMG cars")
 
@@ -96,12 +96,10 @@ rectangulo_ingreso = pygame.Rect(350,400,270,100)
 #tiempo para score
 reloj = pygame.time.Clock()
 
-
 #CARGO LISTA SCORES
 lista_scores = cargar_scores(r"C:\Users\Axel\Desktop\Programacion_1\segundo_parcial\ordenado\scores.json")
 lista_ordenada = ordenar_scores(lista_scores)
 print(lista_ordenada)
-
 
 #CARGO SONIDO
 sonido_game_over = reproducir_musica()
@@ -256,7 +254,7 @@ while flag_correr:
         menu_pausa.reiniciar()
         # menu_pausa.juego_pausado = True
         reiniciar_juego = False 
-        # reinicio posición del auto principal
+        # reiniciio posición del auto principal
         auto_principal.reiniciar()
         # reinicio posición de las motos rivales
         moto_enemiga_1.reiniciar(-120)

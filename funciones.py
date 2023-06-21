@@ -14,7 +14,7 @@ def generar_posicion_random()->int:
 
 def actualizar_posicion_rect(clase):
     """
-    Esta funcion recibe como parametro el rectangulo de la foto del auto principal y la clase del auto principal.
+    Esta funcion recibe como parametro la clase del auto principal.
     Su funcion es hacer que el rectangulo de la foto se mantenga en la foto mientras esta se mueve.
     Por eso actualiza su posicion constantemente
     """
@@ -34,6 +34,9 @@ def pregunta_colision_vehiculo(rect_auto, rect_rival):
         return False
     
 def colision_con_aceite(clase_auto,rect_auto, rect_aceite):
+    """
+    si el auto colisiona con el aceite me lo mueve a una posicion random.
+    """
     if pregunta_colision_vehiculo(rect_auto,rect_aceite):
         posicion_random_x = random.randint(325,575)
         posicion_random_y = random.randint(0,550)
